@@ -67,6 +67,7 @@ const deleteRoom = async (req, res) => {
     }
 };
 
+//Update Room
 const updateRoom = async (req, res) => {
     const roomId = req.params.id;
     const { roomStatus } = req.body;
