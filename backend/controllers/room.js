@@ -46,35 +46,38 @@ const createRoom = async (req, res) => {
         });
     } catch (err) {
         console.log(err);
-        res.status(500).send({message:err.message})
+        res.status(500).send({ message: err.message })
     }
 };
 
 //Delete Room
 const deleteRoom = async (req, res) => {
-    const roomTodo = await db.Room.findOne({ where: { id: req.params.id } });
-    if (roomTodo && roomTodo.user_id === req.user.id) {
-        await roomTodo.destroy();
-        res.status(200).send({ message: "Already deleted" });
-    } else {
-        res.status(404).send({ message: "Not found" });
+    try {
+        const roomId = req.params.id;
+        const roomTodo = await db.Room.findOne({ where: { id: roomId } });
+        if (roomTodo) {
+            await roomTodo.destroy();
+            res.status(200).send({ message: "Already deleted" });
+        } else {
+            res.status(404).send({ message: "Not found" });
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({ message: err.message })
     }
-    const roomId = req.params.id;
-    await db.Room.destroy({ where: { id: roomId } });
-    res.status(204).send();
 };
 
 const updateRoom = async (req, res) => {
-    const roomTodo = await db.Room.findOne({ where: { id: req.params.id } });
-    if (roomTodo && roomTodo.user_id === req.user.id) {
-        await roomTodo.update({ task: req.body.task });
+    const roomId = req.params.id;
+    const { roomStatus } = req.body;
+    const roomTodo = await db.Room.findOne({ where: { id: roomId } });
+    if (roomTodo) {
+        await roomTodo.update({ roomStatus });
         res.status(200).send({ message: "Already updated" });
     } else {
         res.status(404).send({ message: "Not found" });
     }
 
-    const roomId = req.params.id;
-    const { roomStatus } = req.body;
     await db.Room.update({ roomStatus }, { where: { id: roomId } });
     res.status(200).send({ message: "updated" });
 
