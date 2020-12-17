@@ -1,0 +1,13 @@
+.NavRootDiv {
+    position: fixed;
+    width: 100%;
+    height: 10vh;
+    background-color: salmon;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 30px;
+    padding-left: 30px;
+}
