@@ -22,7 +22,7 @@ function ShowRoom() {
 
     return (
         <>
-        <Row align="middle" justify="center" style={{height: "80vh"}}>
+        <Row align="middle" justify="center" style={{height: "100vh"}}>
             {card.map((item) => <RoomCard item={item} /> )}
         </Row>    
         </>

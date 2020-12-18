@@ -112,7 +112,7 @@ function Reserve(props) {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
             <Form
                 {...formItemLayout}
                 form={form}

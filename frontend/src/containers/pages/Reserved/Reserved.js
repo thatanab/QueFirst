@@ -5,7 +5,7 @@ function Reserved() {
     const { roomName } = useParams();
     const location = useLocation();
     return (
-        <div style={{ display: "flex" ,flexDirection:"column", justifyContent: "center", alignItems: "center", height: "80vh" }}>
+        <div style={{ display: "flex" ,flexDirection:"column", justifyContent: "center", alignItems: "center", height: "100vh" }}>
             
             <div>You have successfully reserved {roomName} room on {location.state.reserveDate}.</div>
             

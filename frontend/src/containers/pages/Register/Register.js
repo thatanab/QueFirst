@@ -89,12 +89,16 @@ function Register(props) {
         form.resetFields();
     };
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "80vh" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
             <Form
                 {...formItemLayout}
+                style={{marginTop: "-4rem"}}
                 form={form}
                 name="register"
                 onFinish={onFinish}>
+                    <Row justify="center">
+                    <Col style={{marginTop:"-4rem", marginBottom: "2rem", fontSize: "1rem", fontWeight: "bold"}}>Please enter information</Col>
+                </Row>
 
                 {/* Name */}
                 <Form.Item
