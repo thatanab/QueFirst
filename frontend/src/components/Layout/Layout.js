@@ -22,11 +22,11 @@ const MainSection = styled.div`
 function Layout(props) {
     return (
         <Bg>
-            <NavBar/>
+            <NavBar />
             <MainSection>
                 {props.children}
             </MainSection>
-            <Footer/>
+            <Footer />
         </Bg>
     )
 }
