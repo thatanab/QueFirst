@@ -1,3 +1,5 @@
+import jwtDecode from 'jwt-decode'
+
 const getToken = () => {
     return localStorage.getItem("ACCESS_TOKEN");
 };
@@ -13,8 +15,13 @@ const clearToken = () => {
 };
 
 const getRole = () => {
-    const token = getToken()
+    const token = getToken();
+    // console.log(payload)
     if (token) {
+        const payload = jwtDecode(token);
+        if (payload.role === "ADMIN") {
+            return "ADMIN";
+        }
         return "USER";
     };
     return "GUEST";

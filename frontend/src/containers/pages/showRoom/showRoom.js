@@ -23,7 +23,7 @@ function ShowRoom() {
     return (
         <>
         <Row align="middle" justify="center" style={{height: "100vh", marginTop:"-4rem"}}>
-            {card.map((item) => <RoomCard item={item} /> )}
+            {card.map((item) => <RoomCard item={item} fetchRoom={fetchPartners}/> )}
         </Row>    
         </>
     )

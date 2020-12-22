@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { Form, Input, Button, Row, Col,notification } from 'antd'
+import React, { useContext, useState } from 'react'
+import { Form, Input, Button, Row, Col, notification } from 'antd'
 import axios from '../../../config/axios'
 import { useForm } from 'antd/lib/form/Form';
-import { withRouter } from 'react-router-dom';
+import UserContext from '../../../context/UserContext';
+import { useHistory } from 'react-router-dom';
 
 
 const formItemLayout = {
@@ -27,7 +28,11 @@ const formItemLayout = {
 
 
 
-function Register(props) {
+function AdminRegister(props) {
+
+    const history = useHistory();
+    const { role, setRole } = useContext(UserContext)
+
     const [form] = Form.useForm();
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -35,28 +40,28 @@ function Register(props) {
     const [lastname, setLastname] = useState("")
     const [email, setEmail] = useState("")
 
-    const onFinish = async(values) => {
+    const onFinish = async (values) => {
         console.log(username,
-            password, 
-            name, 
-            lastname, 
+            password,
+            name,
+            lastname,
             email
-            );
-        await axios.post("/users/register", { 
-        
+        );
+        await axios.post("/users/adminregister", {
+
             username,
-            password, 
-            name, 
-            lastname, 
+            password,
+            name,
+            lastname,
             email
-            
         })
 
             .then(res => {
                 notification.success({
                     description: "Signup successfully"
                 });
-                props.history.push("/");
+                
+                history.push("/adminlogin");
             })
             .catch(err => {
                 console.log(err);
@@ -94,12 +99,12 @@ function Register(props) {
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
             <Form
                 {...formItemLayout}
-                style={{marginTop: "-4rem"}}
+                style={{ marginTop: "-4rem" }}
                 form={form}
                 name="register"
                 onFinish={onFinish}>
-                    <Row justify="center">
-                    <Col style={{marginTop:"-4rem", marginBottom: "2rem", fontSize: "1rem", fontWeight: "bold"}}>Please enter information</Col>
+                <Row justify="center">
+                    <Col style={{ marginTop: "-4rem", marginBottom: "2rem", fontSize: "1rem", fontWeight: "bold" }}>Please enter Admin information</Col>
                 </Row>
 
                 {/* Name */}
@@ -112,7 +117,7 @@ function Register(props) {
                             message: 'Please put in your name.'
                         }
                     ]}>
-                    <Input onChange={nameChange}/>
+                    <Input onChange={nameChange} />
                 </Form.Item>
 
                 {/* Lastname */}
@@ -125,7 +130,7 @@ function Register(props) {
                             message: 'Please put in your last name.'
                         }
                     ]}>
-                    <Input onChange={lastnameChange}/>
+                    <Input onChange={lastnameChange} />
                 </Form.Item>
 
                 {/* Email */}
@@ -138,7 +143,7 @@ function Register(props) {
                             message: 'Please put in your email.'
                         }
                     ]}>
-                    <Input onChange={emailChange}/>
+                    <Input onChange={emailChange} />
                 </Form.Item>
 
                 {/* Username */}
@@ -151,7 +156,7 @@ function Register(props) {
                             message: 'Please put in your username.'
                         }
                     ]}>
-                    <Input onChange={usernameChange}/>
+                    <Input onChange={usernameChange} />
                 </Form.Item>
 
                 {/* Password */}
@@ -164,9 +169,8 @@ function Register(props) {
                             message: 'Please put in your password.'
                         }
                     ]}>
-                    <Input.Password onChange={passwordChange}/>
+                    <Input.Password onChange={passwordChange} />
                 </Form.Item>
-
 
                 <Row justify="center">
                     <Col><Button type="primary" onClick={onFinish} >Submit</Button></Col>
@@ -178,4 +182,4 @@ function Register(props) {
     )
 }
 
-export default withRouter(Register)
+export default AdminRegister;

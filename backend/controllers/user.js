@@ -32,7 +32,7 @@ const createUser = async (req,res,next) => {
 //Register
 const register = async (req, res) => {
    try {
-      const { username, password, name, lastname, email, role } = req.body;
+      const { username, password, name, lastname, email } = req.body;
       const targetUser = await db.User.findOne({ where: { username } });
 
       if (targetUser) {
@@ -46,10 +46,37 @@ const register = async (req, res) => {
             name,
             lastname,
             email,
-            role,
+            role: "USER",
             password: hashedPwd
          });
          res.status(201).send({ message: "User created." });
+      }
+   } catch (err) {
+      res.status(500).send({ message: err.message }); ''
+   }
+};
+
+// Admin Register
+const adminRegister = async (req, res) => {
+   try {
+      const { username, password, name, lastname, email } = req.body;
+      const targetUser = await db.User.findOne({ where: { username } });
+
+      if (targetUser) {
+         res.status(400).send({ message: "Username already taken." });
+      } else {
+         const salt = bcryptjs.genSaltSync(Number(process.env.SALT_ROUND));
+         const hashedPwd = bcryptjs.hashSync(password, salt);
+
+         await db.User.create({
+            username,
+            name,
+            lastname,
+            email,
+            role: "ADMIN",
+            password: hashedPwd
+         });
+         res.status(201).send({ message: "Admin created." });
       }
    } catch (err) {
       res.status(500).send({ message: err.message }); ''
@@ -92,4 +119,5 @@ module.exports = {
    register,
    login,
    createUser,
+   adminRegister
 };

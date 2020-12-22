@@ -25,7 +25,7 @@ const formItemLayout = {
     },
 };
 
-function Login(props) {
+function AdminLogin(props) {
 
     const history = useHistory()
 
@@ -44,9 +44,9 @@ function Login(props) {
                 LocalStorageService.setToken(res.data.token);
                 setPayload(jwtDecode(res.data.token));
 
-                setRole("USER");
+                setRole("ADMIN");
                 console.log("OK")
-                history.push("/showRoom");
+                history.push("/deleteroom");
             })
             .catch(err => {
                 console.log(err);
@@ -77,7 +77,7 @@ function Login(props) {
                 name="login"
                 onFinish={onFinish}>
                 <Row justify="center">
-                    <Col style={{ marginBottom: "2rem", fontSize: "2rem", fontWeight: "bold" }}>Welcome to Que First</Col>
+                    <Col style={{ marginBottom: "2rem", fontSize: "2rem", fontWeight: "bold" }}>Admin Login</Col>
                 </Row>
 
                 {/* Username */}
@@ -111,14 +111,10 @@ function Login(props) {
                     <Col><Button htmlType="button" onClick={onReset} style={{ marginLeft: "5rem" }}>Reset</Button></Col>
                 </Row>
 
-                <Row justify="center" style={{display:"flex", flexDirection: "column"}}>
-                    <Col style={{ marginTop: "2rem" }}>New to Que First ? Please register <a href="http://localhost:3000/register" >here</a></Col>
-                    <Col style={{ marginTop: "2rem" }}>For Admin, Please register <a href="http://localhost:3000/adminregister" >here</a> or login <a href="http://localhost:3000/adminlogin" >here </a></Col>
-                </Row>
             </Form>
 
         </div>
     )
 }
 
-export default Login
+export default AdminLogin

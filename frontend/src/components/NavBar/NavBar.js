@@ -20,17 +20,18 @@ function NavBar() {
         notification.success({
             description: "Logout success."
         });
-        
+
         setChange(!change);
         history.replace("/");
         setPayload(null)
+        setRole("GUEST");
         // window.location.reload();
     }
 
     return (
         <div className="NavRootDiv">
-            <div><img style={{width:"120px", height:"40px"}} src={logo}/></div>
-            <div>{payload?.username ? <div onClick={removeToken} style={{cursor:"pointer"}}>Logout </div> : null}</div>
+            <div><img style={{ width: "120px", height: "40px" }} src={logo} /></div>
+            <div>{payload?.username ? <div onClick={removeToken} style={{ cursor: "pointer" }}>Logout </div> : null}</div>
         </div>
     )
 }

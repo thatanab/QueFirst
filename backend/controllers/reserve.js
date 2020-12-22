@@ -54,6 +54,33 @@ const deleteReserve = async (req, res) => {
     res.status(204).send();
 };
 
+const cancelReserve = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const reserve = await db.Reserve.findOne({
+            where: {
+                userId: req.user.id,
+                roomId: id,
+                reserveStatus: 'CONFIRM'
+            }
+        })
+
+        if (!reserve) return res.status(400).send({ message: 'this reserve not found by this user' });
+
+        const room = await db.Room.findOne({ where: { id } })
+
+        if (!room) return res.status(400).send({ message: 'room not found' });
+
+        await reserve.destroy();
+        room.roomStatus = 'Available';
+        await room.save()
+        res.status(200).send({ message: 'Cancel success' })
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({ message: err.message })
+    }
+};
+
 
 const updateReserve = async (req, res) => {
     try {
@@ -127,5 +154,6 @@ module.exports = {
     deleteReserve,
     updateReserve,
     getReserveByRoom,
-    getReserveByUser
+    getReserveByUser,
+    cancelReserve
 };
